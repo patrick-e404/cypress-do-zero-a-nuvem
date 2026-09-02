@@ -156,6 +156,6 @@ O projeto também serve como base para a evolução da suíte e aplicação de c
 
 ## 👨‍💻 Autor
 
-**Patrick Sousa**
+**Patrick Sousa do Nascimento**
 
 Projeto desenvolvido como parte dos estudos práticos em **Quality Assurance e Automação de Testes** seguindo o curso **Cypress do Zero a Nuvem** da escola TalkingAboutTesting.

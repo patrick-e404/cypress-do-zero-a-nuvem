@@ -1,7 +1,7 @@
 describe('Central de Atendimento ao Cliente TAT', () => {
-  beforeEach(() => cy.visit('./src/index.html'));
+  beforeEach(() => cy.visit('./src/index.html'))
 
-  const longtext = Cypress._.repeat('Cypress é massa d+ ', 20);
+  const longtext = Cypress._.repeat('Cypress é massa d+ ', 20)
   const data = {
     firstName: 'Patrick',
     lastName: 'Sousa do Nascimento',
@@ -11,78 +11,85 @@ describe('Central de Atendimento ao Cliente TAT', () => {
 
   it('Valida o titulo da página', () => {
     cy.title()
-      .should('be.equal', 'Central de Atendimento ao Cliente TAT');
+      .should('be.equal', 'Central de Atendimento ao Cliente TAT')
   });
 
   it('HappyPath', () => {
     cy.get('#firstName')
       .type('Patrick')
-      .should('have.value', 'Patrick');
+      .should('have.value', 'Patrick')
 
     cy.get('#lastName')
       .type('Sousa do Nascimento')
-      .should('have.value', 'Sousa do Nascimento');
+      .should('have.value', 'Sousa do Nascimento')
 
     cy.get('#email')
       .type('patrick@teste.com')
-      .should('have.value', 'patrick@teste.com');
+      .should('have.value', 'patrick@teste.com')
 
     cy.get('#phone')
       .type('912345678')
-      .should('have.value', '912345678');
+      .should('have.value', '912345678')
 
     cy.get('#product')
       .select('YouTube')
-      .should('have.value', 'youtube');
+      .should('have.value', 'youtube')
 
-    cy.get('#support-type > :nth-child(3)').click();
+    cy.get('input[type="radio"][value="elogio"]')
+      .check()
+      .should('be.checked')
 
-    cy.get('#email-checkbox').click();
+    cy.get('#email-checkbox').click()
 
     cy.get('#open-text-area')
       .type(longtext, { delay: 0 })
-      .should('have.value', longtext);
+      .should('have.value', longtext)
 
     cy.contains('button', 'Enviar').click()
 
     cy.get('.success')
-      .should('be.visible', 'Mensagem enviada com sucesso');
+      .should('be.visible', 'Mensagem enviada com sucesso')
   });
 
-  it('Login com email incorreto', () => {
+  it.only('Login com email incorreto', () => {
     cy.get('#firstName')
       .type('Patrick')
-      .should('have.value', 'Patrick');
+      .should('have.value', 'Patrick')
 
     cy.get('#lastName')
       .type('Sousa do Nascimento')
-      .should('have.value', 'Sousa do Nascimento');
+      .should('have.value', 'Sousa do Nascimento')
 
     cy.get('#email')
       .type('patrick')
-      .should('have.value', 'patrick');
+      .should('have.value', 'patrick')
 
     cy.get('#phone')
       .type('912345678')
-      .should('have.value', '912345678');
+      .should('have.value', '912345678')
 
     cy.get('#product')
       .select('YouTube')
-      .should('have.value', 'youtube');
+      .should('have.value', 'youtube')
 
-    cy.get('#support-type > :nth-child(3)').click();
+    cy.get('input[type="radio"]')
+      .each(typeOfService => {
+        cy.wrap(typeOfService)
+        .check()
+        .should('be.checked')
+      })
 
-    cy.get('#email-checkbox').click();
+    cy.get('#email-checkbox').click()
 
     cy.get('#open-text-area')
       .type(longtext, { delay: 0 })
-      .should('have.value', longtext);
+      .should('have.value', longtext)
 
     cy.contains('button', 'Enviar').click()
 
     cy.get('.error')
-      .should('be.visible', 'Valide os campos obrigatórios!');
-  });
+      .should('be.visible', 'Valide os campos obrigatórios!')
+  })
 
   it('Valida mensagem de erro no campo telefone quando obrigatorio', () => {
     cy.get('#firstName')
@@ -103,7 +110,9 @@ describe('Central de Atendimento ao Cliente TAT', () => {
       .select('YouTube')
       .should('have.value', 'youtube');
 
-    cy.get('#support-type > :nth-child(3)').click();
+    cy.get('input[type="radio"][value="elogio"]')
+      .check()
+      .should('be.checked')
 
     cy.get('#phone-checkbox').click();
 
