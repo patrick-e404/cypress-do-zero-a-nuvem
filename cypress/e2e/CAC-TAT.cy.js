@@ -39,7 +39,9 @@ describe('Central de Atendimento ao Cliente TAT', () => {
       .check()
       .should('be.checked')
 
-    cy.get('#email-checkbox').click()
+    cy.get('#email-checkbox')
+      .check()
+      .should('be.checked')
 
     cy.get('#open-text-area')
       .type(longtext, { delay: 0 })
@@ -51,7 +53,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
       .should('be.visible', 'Mensagem enviada com sucesso')
   });
 
-  it.only('Login com email incorreto', () => {
+  it('Login com email incorreto', () => {
     cy.get('#firstName')
       .type('Patrick')
       .should('have.value', 'Patrick')
@@ -79,7 +81,12 @@ describe('Central de Atendimento ao Cliente TAT', () => {
         .should('be.checked')
       })
 
-    cy.get('#email-checkbox').click()
+    cy.get('#email-checkbox')
+      .check()
+      .should('be.checked')
+      .last()
+      .uncheck()
+      .should('not.be.checked')
 
     cy.get('#open-text-area')
       .type(longtext, { delay: 0 })
@@ -114,7 +121,8 @@ describe('Central de Atendimento ao Cliente TAT', () => {
       .check()
       .should('be.checked')
 
-    cy.get('#phone-checkbox').click();
+    cy.get('input[type="checkbox"]')
+      .check()
 
     cy.get('#open-text-area')
       .type(longtext, { delay: 0 })
@@ -171,4 +179,11 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.get('.success')
       .should('be.visible', 'Mensagem enviada com sucesso');
   });
+  it.only('Upando um arquivo', () =>{
+    cy.get('#file-upload')
+      .selectFile('cypress/fixtures/example.json')
+      .should(input =>{
+        expect(input[0].files[0].name).to.equal('example.json')
+      })
+  })
 });
