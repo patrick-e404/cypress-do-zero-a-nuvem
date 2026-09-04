@@ -1,5 +1,5 @@
 describe('Central de Atendimento ao Cliente TAT', () => {
-  beforeEach(() => cy.visit('./'))
+  beforeEach(() => cy.visit('./src/index.html'))
 
   const longtext = Cypress._.repeat('Cypress é massa d+ ', 20)
   const data = {
