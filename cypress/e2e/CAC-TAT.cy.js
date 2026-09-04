@@ -12,7 +12,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
   it('Valida o titulo da página', () => {
     cy.title()
       .should('be.equal', 'Central de Atendimento ao Cliente TAT')
-  });
+  })
 
   it('HappyPath', () => {
     cy.get('#firstName')
@@ -51,7 +51,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
 
     cy.get('.success')
       .should('be.visible', 'Mensagem enviada com sucesso')
-  });
+  })
 
   it('Login com email incorreto', () => {
     cy.get('#firstName')
@@ -132,7 +132,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
 
     cy.get('.error')
       .should('be.visible', 'Valide os campos obrigatórios!');
-  });
+  })
 
   it('Preenche e limpa os campos nome, sobrenome, email, e telefone', () => {
     cy.get('#firstName')
@@ -158,27 +158,28 @@ describe('Central de Atendimento ao Cliente TAT', () => {
       .should('have.value', '912345678')
       .clear()
       .should('have.value', '');
-  });
+  })
 
   it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', () => {
     cy.contains('button', 'Enviar').click()
 
     cy.get('.error')
       .should('be.visible', 'Valide os campos obrigatórios!');
-  });
+  })
 
   it('campo telefone continua vazio quando preenchido com um valor não-numérico', () => {
     cy.get('#phone')
       .type('abcdefg')
       .should('have.value', '');
-  });
+  })
 
   it('envia o formuário com sucesso usando um comando customizado', () => {
     cy.fillMandatoryFieldsAndSubmit(data);
 
     cy.get('.success')
       .should('be.visible', 'Mensagem enviada com sucesso');
-  });
+  })
+
   it('Upando um arquivo', () =>{
     cy.get('#file-upload')
       .selectFile('cypress/fixtures/example.json')
@@ -186,6 +187,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
         expect(input[0].files[0].name).to.equal('example.json')
       })
   })
+
   it('seleciona um arquivo simulando um drag-and-drop', () =>{
     cy.get('#file-upload')
       .selectFile('cypress/fixtures/example.json', {action: 'drag-drop'})
@@ -193,6 +195,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
         expect(input[0].files[0].name).to.equal('example.json')
       })
   })
+
   it('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', () =>{
     cy.fixture('example.json').as('meuArquivo')
     cy.get('#file-upload')
@@ -201,4 +204,18 @@ describe('Central de Atendimento ao Cliente TAT', () => {
         expect(input[0].files[0].name).to.equal('example.json')
       })
   })
-});
+
+  it('verifica que a política de privacidade abre em outra aba sem a necessidade de um clique', () =>{
+    cy.contains('a', 'Política de Privacidade')
+      .should('have.attr', 'href', 'privacy.html')
+      .and('have.attr', 'target', '_blank')
+  })
+
+  it('acessa a página da política de privacidade removendo o target e então clicando no link', () =>{
+    cy.contains('a', 'Política de Privacidade')
+      .invoke('removeAttr', 'target').click()
+
+    cy.contains('h1', 'CAC TAT - Política de Privacidade')
+      .should('be.visible')
+  })
+})
